@@ -6,14 +6,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.univalle.inventoryapp.R
+import com.univalle.inventoryapp.databinding.FragmentItemDetailsBinding
 
 class ItemDetailsFragment : Fragment() {
+    private lateinit var binding: FragmentItemDetailsBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_item_details, container, false)
+        binding = FragmentItemDetailsBinding.inflate(inflater)
+        binding.lifecycleOwner = this
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
     }
 
 

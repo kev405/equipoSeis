@@ -1,15 +1,121 @@
-*.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
+# Sistema operativo
 .DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
+Thumbs.db
+desktop.ini
+
+# IDEs y configuraciones de usuario
+.idea/
+*.iml
+*.iws
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Archivos locales de Android Studio / IntelliJ
+.idea/*/workspace.xml
+.idea/tasks.xml
+.idea/gradle.xml
+.idea/dictionaries
+.idea/usage.statistics.xml
+
+# Gradle
+.gradle/
+build/
+**/build/
+gradlew
+gradlew.bat
+/.gradle/
+*/.gradle/
+
+# Dependencias y caches
+.gradle/
+buildSrc/.gradle/
+.caches/
+**/.caches/
+
+# Propiedades locales (no subir)
 local.properties
+secret.properties
+keystore.properties
+
+# Archivos de firma
+*.jks
+*.keystore
+*.pem
+*.p12
+*.pfx
+
+# Android specific
+captures/
+.externalNativeBuild/
+.cxx/
+*.log
+outputs/
+*.apk
+*.ap_/
+*.aab
+
+# Kotlin / Java
+*.class
+*.log
+*.jar
+*.war
+*.ear
+*.nar
+*.zip
+*.tar.gz
+*.rar
+
+# Kotlin metadata / generated
+*.kotlin_module
+**/*.kotlin_module
+kotlin-tooling/
+kotlin/gradle-plugin/build/
+
+# Kapt / Annotation processors
+kapt/
+kapt3/
+*.kapt/
+generated/
+**/generated/
+build/generated/
+
+# KSP
+.ksp/
+.ksp-cache/
+**/.ksp/
+
+# Android Studio generated
+captures/
+.navigation/
+.idea/libraries/
+
+# Proguard / R8
+proguard/
+proguard/*.txt
+
+# Native / NDK
+obj/
+.externalNativeBuild/
+.cxx/
+
+# Misc
+*.class
+*.log
+*.orig
+*.rej
+*.swp
+*.swo
+*.bak
+
+# JetBrains Rider / CLion / other IDEs
+.idea/
+*.iml
+*.ipr
+
+# OS-specific temp files
+~$*
+.*.swp
+*.tmp

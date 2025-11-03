@@ -5,4 +5,5 @@
     <color name="backgroundColor">#CC000000</color>
     <color name="toolbarColor">#424242</color>
     <color name="orangeInventory">#e7522e</color>
+    <color name="backgroundColorItem">#e7e0eb</color>
 </resources>

@@ -2,4 +2,7 @@
     <string name="app_name">InventoryApp</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="homeInventoryTitle">Inventario</string>
+    <string name="sampleItemName">Item Name</string>
+    <string name="sampleItemId">ID: 10</string>
+    <string name="sampleItemPrice">$25.000,00</string>
 </resources>

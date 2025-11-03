@@ -51,8 +51,6 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     //toolbar
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.coordinatorlayout:coordinatorlayout:1.2.0")
 
     //navigation

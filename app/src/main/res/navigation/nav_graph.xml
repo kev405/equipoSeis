@@ -6,6 +6,15 @@
     app:startDestination="@id/homeInventoryFragment">
 
     <fragment
+        android:id="@+id/authentificationFragment"
+        android:name="com.univalle.inventoryapp.view.fragments.AuthentificationFragment"
+        android:label="AuthentificationFragment"
+        tools:layout="@layout/fragment_authentification" >
+        <action
+            android:id="@+id/action_authentificationFragment_to_homeInventoryFragment"
+            app:destination="@id/homeInventoryFragment" />
+    </fragment>
+    <fragment
         android:id="@+id/homeInventoryFragment"
         android:name="com.univalle.inventoryapp.view.fragments.HomeInventoryFragment"
         android:label="fragment_home_inventory"
@@ -16,6 +25,9 @@
         <action
             android:id="@+id/action_homeInventoryFragment_to_itemDetailsFragment"
             app:destination="@id/itemDetailsFragment" />
+        <action
+            android:id="@+id/action_homeInventoryFragment_to_authentificationFragment"
+            app:destination="@id/authentificationFragment" />
     </fragment>
     <fragment
         android:id="@+id/addItemFragment"

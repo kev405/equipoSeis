@@ -36,6 +36,13 @@ class HomeInventoryFragment : Fragment() {
     }
 
     private fun controlers() {
+        listenerButtonAdd()
+    }
+
+    private fun listenerButtonAdd() {
+        binding.floatingActionButtonAdd.setOnClickListener {
+            findNavController().navigate(R.id.action_homeInventoryFragment_to_addItemFragment)
+        }
     }
 
     private fun viewModelObservers() {

@@ -7,10 +7,8 @@ import com.univalle.inventoryapp.model.Inventory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-
 class InventoryRepository (val context: Context){
     private var inventoryDao: InventoryDao = InventoryDB.getDatabase(context).inventoryDao()
-
 
     suspend fun getListInventory():MutableList<Inventory>{
         return withContext(Dispatchers.IO){
@@ -21,6 +19,12 @@ class InventoryRepository (val context: Context){
     suspend fun insertProduct(inventory: Inventory){
         withContext(Dispatchers.IO){
             inventoryDao.insertProduct(inventory)
+        }
+    }
+
+    suspend fun delete(inventory: Inventory){
+        withContext(Dispatchers.IO){
+            inventoryDao.delete(inventory)
         }
     }
 

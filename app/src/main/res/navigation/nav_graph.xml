@@ -43,9 +43,11 @@
         android:name="com.univalle.inventoryapp.view.fragments.ItemDetailsFragment"
         android:label="fragment_item_details"
         tools:layout="@layout/fragment_item_details" >
+
         <action
             android:id="@+id/action_itemDetailsFragment_to_itemEditFragment"
-            app:destination="@id/itemEditFragment" />
+            app:destination="@id/itemEditFragment" >
+        </action>
     </fragment>
     <fragment
         android:id="@+id/itemEditFragment"

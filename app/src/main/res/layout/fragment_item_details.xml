@@ -1,19 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <FrameLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/backgroundColor"
         tools:context=".view.fragments.ItemDetailsFragment">
 
-        <TextView
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar_detail"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/toolbarColor"
+                app:title="@string/product_detail"
+                app:titleTextColor="@android:color/white"
+                app:navigationIcon="@drawable/ic_arrow_back"
+                app:navigationIconTint="@android:color/white" />
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Item Details Fragment"
-            android:textColor="@color/white"
-            />
+            android:orientation="vertical"
+            android:padding="16dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    </FrameLayout>
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="12dp"
+                app:cardBackgroundColor="@android:color/white">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/detail_product_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:textColor="@android:color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        tools:text="Zapatos" />
+
+                    <TextView
+                        android:id="@+id/label_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/detail_product_name"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/precio_unidad"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
+                    <TextView
+                        android:id="@+id/detail_product_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@id/label_price"
+                        android:layout_alignParentEnd="true"
+                        android:textColor="@color/backgroundTint"
+                        android:textSize="16sp"
+                        tools:text="$ 23.000,00" />
+
+                    <TextView
+                        android:id="@+id/label_quantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/label_price"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/cantidad_disponible"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
+                    <TextView
+                        android:id="@+id/detail_product_quantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@id/label_quantity"
+                        android:layout_alignParentEnd="true"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp"
+                        tools:text="256" />
+
+                    <TextView
+                        android:id="@+id/label_total"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/label_quantity"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/total"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/detail_product_total"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@id/label_total"
+                        android:layout_alignParentEnd="true"
+                        android:textColor="@color/backgroundTint"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        tools:text="$ 5.888.000,00" />
+
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_delete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:paddingVertical="12dp"
+                android:text="@string/eliminar"
+                android:textStyle="bold"
+                app:backgroundTint="@color/backgroundTint"
+                app:cornerRadius="12dp" />
+
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
+            android:contentDescription="@string/editar_producto"
+            app:backgroundTint="@color/backgroundTint"
+            app:tint="@android:color/white"
+            android:src="@drawable/ic_edit" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

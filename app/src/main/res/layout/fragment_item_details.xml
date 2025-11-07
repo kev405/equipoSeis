@@ -6,7 +6,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#CC000000"
+        android:background="@color/backgroundColor"
         tools:context=".view.fragments.ItemDetailsFragment">
 
         <com.google.android.material.appbar.AppBarLayout
@@ -17,8 +17,8 @@
                 android:id="@+id/toolbar_detail"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="#424242"
-                app:title="Detalle del producto"
+                android:background="@color/toolbarColor"
+                app:title="@string/product_detail"
                 app:titleTextColor="@android:color/white"
                 app:navigationIcon="@drawable/ic_arrow_back"
                 app:navigationIconTint="@android:color/white" />
@@ -67,7 +67,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignBaseline="@id/label_price"
                         android:layout_alignParentEnd="true"
-                        android:textColor="#E7522A"
+                        android:textColor="@color/backgroundTint"
                         android:textSize="16sp"
                         tools:text="$ 23.000,00" />
 
@@ -106,7 +106,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignBaseline="@id/label_total"
                         android:layout_alignParentEnd="true"
-                        android:textColor="#E7522A"
+                        android:textColor="@color/backgroundTint"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         tools:text="$ 5.888.000,00" />
@@ -122,7 +122,7 @@
                 android:paddingVertical="12dp"
                 android:text="@string/eliminar"
                 android:textStyle="bold"
-                app:backgroundTint="#E7522A"
+                app:backgroundTint="@color/backgroundTint"
                 app:cornerRadius="12dp" />
 
         </LinearLayout>
@@ -134,7 +134,7 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
             android:contentDescription="@string/editar_producto"
-            app:backgroundTint="#E7522A"
+            app:backgroundTint="@color/backgroundTint"
             app:tint="@android:color/white"
             android:src="@drawable/ic_edit" />
 

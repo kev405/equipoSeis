@@ -10,4 +10,10 @@
     <string name="total">Total:</string>
     <string name="eliminar">Eliminar</string>
     <string name="editar_producto">Editar producto</string>
+    <string name="product_detail">Detalle del producto</string>
+    <string name="product_deleted">Producto eliminado</string>
+    <string name="confirm_delete_title">Confirmar eliminación</string>
+    <string name="confirm_delete_message">¿Estás seguro de que deseas eliminar este producto?</string>
+    <string name="no">No</string>
+    <string name="yes">Si</string>
 </resources>

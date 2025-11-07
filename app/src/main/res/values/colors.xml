@@ -6,4 +6,5 @@
     <color name="toolbarColor">#424242</color>
     <color name="orangeInventory">#e7522e</color>
     <color name="backgroundColorItem">#e7e0eb</color>
+    <color name="backgroundTint">#E7522A</color>
 </resources>

@@ -44,6 +44,10 @@ class ItemDetailsFragment : Fragment() {
             bundle.putSerializable("dataInventory", receivedInventory)
             findNavController().navigate(R.id.action_itemDetailsFragment_to_itemEditFragment, bundle)
         }
+
+        binding.toolbarDetail.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     private fun dataInventory() {
@@ -62,15 +66,14 @@ class ItemDetailsFragment : Fragment() {
 
     private fun showDeleteConfirmationDialog() {
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Confirmar eliminación")
-            .setMessage("¿Estás seguro de que deseas eliminar este producto?")
-            .setNegativeButton("No") { dialog, _ ->
+            .setTitle(getString(R.string.confirm_delete_title))
+            .setMessage(getString(R.string.confirm_delete_message))
+            .setNegativeButton(getString(R.string.no)) { dialog, _ ->
                 dialog.dismiss()
             }
-            .setPositiveButton("Sí") { dialog, _ ->
+            .setPositiveButton(getString(R.string.yes)) { dialog, _ ->
                 deleteInventory()
-                Toast.makeText(requireContext(), "Producto eliminado", Toast.LENGTH_SHORT).show()
-                findNavController().popBackStack()
+                Toast.makeText(requireContext(), getString(R.string.product_deleted), Toast.LENGTH_SHORT).show()
             }
             .show()
     }

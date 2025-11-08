@@ -7,4 +7,5 @@
     <color name="orangeInventory">#e7522e</color>
     <color name="backgroundColorItem">#e7e0eb</color>
     <color name="backgroundTint">#E7522A</color>
+    <color name="darkGreyBackground">#FF424242</color>
 </resources>

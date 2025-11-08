@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeInventoryFragment">
+    app:startDestination="@id/authenticationFragment">
 
     <fragment
         android:id="@+id/authenticationFragment"
@@ -12,7 +12,9 @@
         tools:layout="@layout/fragment_authentication" >
         <action
             android:id="@+id/action_authenticationFragment_to_homeInventoryFragment"
-            app:destination="@id/homeInventoryFragment" />
+            app:destination="@id/homeInventoryFragment"
+            app:popUpTo="@id/authenticationFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/homeInventoryFragment"

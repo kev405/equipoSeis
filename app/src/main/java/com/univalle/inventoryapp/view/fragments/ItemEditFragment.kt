@@ -14,7 +14,6 @@ import com.univalle.inventoryapp.R
 import com.univalle.inventoryapp.databinding.FragmentItemEditBinding
 import com.univalle.inventoryapp.model.Inventory
 import com.univalle.inventoryapp.viewmodel.InventoryViewModel
-import kotlin.getValue
 
 class ItemEditFragment : Fragment() {
     private lateinit var binding: FragmentItemEditBinding

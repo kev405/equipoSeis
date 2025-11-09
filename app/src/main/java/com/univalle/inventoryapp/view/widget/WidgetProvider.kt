@@ -11,9 +11,8 @@ import com.univalle.inventoryapp.R
 import com.univalle.inventoryapp.view.MainActivity
 
 import android.graphics.Color
-import com.univalle.inventoryapp.view.PREFS_NAME1
-import com.univalle.inventoryapp.view.PREF_KEY_WIDGET_VALUE1
-
+import com.univalle.inventoryapp.utils.Constants.PREF_KEY_WIDGET_VALUE1
+import com.univalle.inventoryapp.utils.Constants.PREFS_NAME1
 
 class WidgetProvider: AppWidgetProvider() {
 

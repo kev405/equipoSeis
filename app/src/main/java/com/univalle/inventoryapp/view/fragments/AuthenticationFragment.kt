@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
@@ -51,6 +52,8 @@ class AuthenticationFragment : Fragment() {
         binding.lottieAnimationView.setOnClickListener {
             showBiometricPrompt()
         }
+
+        controllerOverSystemBackButton()
     }
 
     private fun setupBiometricAuth() {
@@ -109,5 +112,12 @@ class AuthenticationFragment : Fragment() {
 
     private fun navigateToHome() {
         findNavController().navigate(R.id.action_authenticationFragment_to_homeInventoryFragment)
+    }
+
+
+    private fun controllerOverSystemBackButton() {
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            requireActivity().moveTaskToBack(true)
+        }
     }
 }

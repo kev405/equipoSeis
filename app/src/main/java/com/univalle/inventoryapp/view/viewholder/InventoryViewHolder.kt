@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.univalle.inventoryapp.R
 import com.univalle.inventoryapp.databinding.ItemInventoryBinding
 import com.univalle.inventoryapp.model.Inventory
+import com.univalle.inventoryapp.utils.PriceFormatter
 
 
 class InventoryViewHolder (binding: ItemInventoryBinding, navController: NavController) :
@@ -16,7 +17,7 @@ class InventoryViewHolder (binding: ItemInventoryBinding, navController: NavCont
     fun setItemInventory(inventory: Inventory) {
         bindingItem.textViewName.text = inventory.name
         bindingItem.textViewItemId.text = "ID: ${inventory.id}"
-        bindingItem.textViewPrice.text = "$ ${inventory.price}"
+        bindingItem.textViewPrice.text = "$ ${PriceFormatter.formatPrice(inventory.price)}"
 
         bindingItem.cardViewInventory.setOnClickListener {
             val bundle = Bundle()

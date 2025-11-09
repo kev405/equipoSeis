@@ -2,6 +2,10 @@
     <style name="Base.Theme.InventoryApp" parent="Theme.Material3.DayNight.NoActionBar">
     </style>
 
+    <style name="Theme.InventoryApp.Login" parent="Base.Theme.InventoryApp">
+        <item name="android:windowBackground">@color/darkGreyBackground</item>
+    </style>
+
     <style name="Theme.InventoryApp" parent="Base.Theme.InventoryApp" />
 
     <style name="Widget.App.TextInputLayout.White" parent="Widget.Material3.TextInputLayout.OutlinedBox">

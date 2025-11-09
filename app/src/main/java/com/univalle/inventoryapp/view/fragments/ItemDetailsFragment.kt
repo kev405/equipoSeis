@@ -13,6 +13,7 @@ import com.univalle.inventoryapp.R
 import com.univalle.inventoryapp.databinding.FragmentItemDetailsBinding
 import com.univalle.inventoryapp.model.Inventory
 import com.univalle.inventoryapp.viewmodel.InventoryViewModel
+import com.univalle.inventoryapp.utils.PriceFormatter
 
 class ItemDetailsFragment : Fragment() {
     private lateinit var binding: FragmentItemDetailsBinding
@@ -54,14 +55,9 @@ class ItemDetailsFragment : Fragment() {
         val receivedBundle = arguments
         receivedInventory = receivedBundle?.getSerializable("key") as Inventory
         binding.detailProductName.text = "${receivedInventory.name}"
-        binding.detailProductPrice.text = "$ ${receivedInventory.price}"
+        binding.detailProductPrice.text = "$ ${PriceFormatter.formatPrice(receivedInventory.price)}"
         binding.detailProductQuantity.text = "${receivedInventory.quantity}"
-        binding.detailProductTotal.text = "$ ${
-            inventoryViewModel.totalProducto(
-                receivedInventory.price,
-                receivedInventory.quantity
-            )
-        }"
+        binding.detailProductTotal.text = "$ ${PriceFormatter.formatPrice(inventoryViewModel.totalProducto(receivedInventory.price, receivedInventory.quantity))}"
     }
 
     private fun showDeleteConfirmationDialog() {

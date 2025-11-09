@@ -1,5 +1,6 @@
 package com.univalle.inventoryapp.view.fragments
 
+import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Editable
@@ -58,9 +59,11 @@ class ItemEditFragment : Fragment() {
 
         binding.buttonEdit.isEnabled = name.isNotEmpty() && price.isNotEmpty() && quantity.isNotEmpty()
         if (binding.buttonEdit.isEnabled) {
-            binding.buttonEdit.typeface = Typeface.DEFAULT_BOLD
+            binding.buttonEdit.setTextColor(Color.WHITE)
+            binding.buttonEdit.setTypeface(null, Typeface.BOLD)
         } else {
-            binding.buttonEdit.typeface = Typeface.DEFAULT
+            binding.buttonEdit.setTextColor(Color.LTGRAY)
+            binding.buttonEdit.setTypeface(null, Typeface.NORMAL)
         }
     }
 
@@ -71,14 +74,14 @@ class ItemEditFragment : Fragment() {
         }
 
         binding.toolbar.setNavigationOnClickListener {
-            findNavController().navigate(R.id.action_itemEditFragment_to_homeInventoryFragment)
+            findNavController().popBackStack()
         }
     }
 
     private fun dataInventory(){
         val receivedBundle = arguments
         receivedInventory = receivedBundle?.getSerializable("dataInventory") as Inventory
-        binding.textProductIdHeader.text = receivedInventory.id.toString()
+        binding.textProductIdHeader.text = getString(R.string.product_id, receivedInventory.id)
         binding.editProductNameText.setText(receivedInventory.name)
         binding.editProductPriceText.setText(receivedInventory.price.toString())
         binding.editProductQuantityText.setText(receivedInventory.quantity.toString())

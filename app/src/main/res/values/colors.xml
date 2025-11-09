@@ -11,4 +11,5 @@
     <color name="widget_title">#e7522e</color>
     <color name="widget_title2">#FFFFFF</color>
     <color name="widget_icon">#FA8523</color>
+    <color name="darkGreyBackground">#FF424242</color>
 </resources>

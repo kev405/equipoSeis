@@ -17,7 +17,7 @@ class InventoryViewHolder (binding: ItemInventoryBinding, navController: NavCont
     fun setItemInventory(inventory: Inventory) {
         bindingItem.textViewName.text = inventory.name
         bindingItem.textViewItemId.text = "ID: ${inventory.id}"
-        bindingItem.textViewPrice.text = "$ ${PriceFormatter.formatPrice(inventory.price)}"
+        bindingItem.textViewPrice.text = PriceFormatter.formatPrice(inventory.price)
 
         bindingItem.cardViewInventory.setOnClickListener {
             val bundle = Bundle()

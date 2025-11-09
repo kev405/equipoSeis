@@ -25,7 +25,7 @@ class ItemEditFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentItemEditBinding.inflate(inflater)
         binding.lifecycleOwner = this
         return binding.root
@@ -90,9 +90,14 @@ class ItemEditFragment : Fragment() {
     }
 
     private fun updateInventory(){
-        val name = binding.editProductNameText.text.toString()
-        val price = binding.editProductPriceText.text.toString().toInt()
-        val quantity = binding.editProductQuantityText.text.toString().toInt()
+        val name = binding.editProductNameText.text.toString().trim()
+        val price = binding.editProductPriceText.text.toString().trim().toDoubleOrNull()
+        val quantity = binding.editProductQuantityText.text.toString().trim().toIntOrNull()
+
+        if (price == null || quantity == null) {
+            return
+        }
+
         val inventory = Inventory(receivedInventory.id, name, price, quantity)
         inventoryViewModel.updateInventory(inventory)
         findNavController().navigate(R.id.action_itemEditFragment_to_homeInventoryFragment)

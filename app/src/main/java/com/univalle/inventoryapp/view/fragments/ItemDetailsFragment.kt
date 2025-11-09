@@ -54,10 +54,10 @@ class ItemDetailsFragment : Fragment() {
     private fun dataInventory() {
         val receivedBundle = arguments
         receivedInventory = receivedBundle?.getSerializable("key") as Inventory
-        binding.detailProductName.text = "${receivedInventory.name}"
-        binding.detailProductPrice.text = "$ ${PriceFormatter.formatPrice(receivedInventory.price)}"
+        binding.detailProductName.text = receivedInventory.name
+        binding.detailProductPrice.text = PriceFormatter.formatPrice(receivedInventory.price)
         binding.detailProductQuantity.text = "${receivedInventory.quantity}"
-        binding.detailProductTotal.text = "$ ${PriceFormatter.formatPrice(inventoryViewModel.totalProducto(receivedInventory.price, receivedInventory.quantity))}"
+        binding.detailProductTotal.text = PriceFormatter.formatPrice(inventoryViewModel.totalProducto(receivedInventory.price, receivedInventory.quantity))
     }
 
     private fun showDeleteConfirmationDialog() {

@@ -3,6 +3,7 @@ package com.univalle.inventoryapp.utils
 import java.math.BigDecimal
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
+import java.text.NumberFormat
 import java.util.Locale
 
 object PriceFormatter {
@@ -17,6 +18,8 @@ object PriceFormatter {
     }
 
     fun formatPrice(price: Double): String {
-        return formatter.format(price)
+        val format = NumberFormat.getCurrencyInstance(Locale("es", "CO"))
+        format.maximumFractionDigits = 2
+        return format.format(price)
     }
 }

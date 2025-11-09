@@ -79,7 +79,7 @@ class AddItemFragment : Fragment() {
     private fun guardarProducto() {
         val codigo = binding.etCodigo.text.toString().toIntOrNull()
         val nombre = binding.etNombre.text.toString()
-        val precio = binding.etPrecio.text.toString().toIntOrNull()
+        val precio = binding.etPrecio.text.toString().toDoubleOrNull()
         val cantidad = binding.etCantidad.text.toString().toIntOrNull()
 
         if (codigo != null && nombre.isNotBlank() && precio != null && cantidad != null) {

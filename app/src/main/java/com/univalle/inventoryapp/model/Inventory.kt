@@ -9,5 +9,5 @@ data class Inventory(
     @PrimaryKey
     val id: Int,
     val name: String,
-    val price: Int,
+    val price: Double,
     val quantity: Int): Serializable

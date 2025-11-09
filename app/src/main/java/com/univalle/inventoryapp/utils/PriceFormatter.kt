@@ -1,14 +1,12 @@
 package com.univalle.inventoryapp.utils
-import java.math.BigDecimal
 
-import java.text.NumberFormat
+import java.math.BigDecimal
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.util.Locale
 
 object PriceFormatter {
-    private val formatter: NumberFormat = NumberFormat.getCurrencyInstance().apply {
-        maximumFractionDigits = 2
-        minimumFractionDigits = 2
-        isGroupingUsed = true
-    }
+    private val formatter = DecimalFormat("#,##0.00", DecimalFormatSymbols(Locale.GERMAN))
 
     fun formatPrice(price: BigDecimal): String {
         return formatter.format(price)

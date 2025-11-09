@@ -74,7 +74,7 @@
         android:id="@+id/widget_title2"
         android:layout_width="180dp"
         android:layout_height="40dp"
-        android:text="gestionar inventario"
+        android:text="Gestionar Inventario"
         android:textColor="@color/widget_title2"
         android:textSize="18sp"
         android:layout_below="@id/widget_value"

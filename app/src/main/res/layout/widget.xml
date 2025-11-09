@@ -1,22 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent">-->
-
-<!--</androidx.constraintlayout.widget.ConstraintLayout>-->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/widget_bg">
+    android:background="@color/widget_bg"
+    android:clickable="false"
+    android:focusable="false"
+    android:descendantFocusability="blocksDescendants"
+    android:padding="10sp">
 
     <TextView
-        android:id="@+id/widgetText"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
+        android:id="@+id/widget_title"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
         android:background="@color/widget_bg"
         android:textColor="@color/widget_title"
-        android:text="Hello Widget!"
+        android:layout_below="@id/inventory_icon"
+        android:text="Inventory"
+        android:clickable="false"
+        android:focusable="false"
+        android:textIsSelectable="false"
+        android:linksClickable="false"
+
         android:textSize="18sp" />
+    <ImageView
+        android:id="@+id/inventory_icon"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@drawable/ic_edit"
+        android:contentDescription="Go to Details"
+        android:clickable="true"
+        android:focusable="true"
+        />
+
+    <TextView
+        android:id="@+id/widget_title1"
+        android:layout_width="180dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="3dp"
+        android:background="@color/widget_bg"
+        android:text="cuanto tengo de inventario?"
+        android:textColor="@color/widget_title"
+        android:textSize="14sp"
+        android:clickable="false"
+        android:focusable="false"
+        android:linksClickable="false"
+
+        android:layout_toEndOf="@id/widget_title"
+        />
+    <ImageView
+        android:id="@+id/eye_icon"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_opened_eye"
+        android:contentDescription="Go to Details"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_toEndOf="@id/widget_title1"
+        />
+
+    <TextView
+        android:id="@+id/widget_value"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:background="@color/widget_bg"
+        android:text="TEST"
+        android:textColor="@color/widget_title"
+        android:textSize="18sp"
+        android:layout_below="@id/widget_title1"
+        android:layout_alignEnd="@id/eye_icon"
+
+        />
+
+    <TextView
+        android:id="@+id/widget_title2"
+        android:layout_width="180dp"
+        android:layout_height="40dp"
+        android:background="@color/widget_bg"
+        android:text="gestionar inventarrio"
+        android:textColor="@color/widget_title"
+        android:textSize="18sp"
+        android:layout_below="@id/widget_value"
+        android:layout_toStartOf="@id/settings_icon"
+        />
+    <ImageView
+        android:id="@+id/settings_icon"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_edit"
+        android:contentDescription="Go to Details"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_below="@id/widget_value"
+        android:layout_alignEnd="@id/eye_icon"
+        />
 
 </RelativeLayout>

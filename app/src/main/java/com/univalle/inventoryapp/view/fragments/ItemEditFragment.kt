@@ -5,16 +5,21 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.univalle.inventoryapp.R
 import com.univalle.inventoryapp.databinding.FragmentItemEditBinding
 import com.univalle.inventoryapp.model.Inventory
+import com.univalle.inventoryapp.utils.PriceFormatter
+import com.univalle.inventoryapp.utils.WidgetUpdate
 import com.univalle.inventoryapp.viewmodel.InventoryViewModel
+import kotlinx.coroutines.launch
 
 class ItemEditFragment : Fragment() {
     private lateinit var binding: FragmentItemEditBinding
@@ -100,8 +105,13 @@ class ItemEditFragment : Fragment() {
 
         val inventory = Inventory(receivedInventory.id, name, price, quantity)
         inventoryViewModel.updateInventory(inventory)
-        findNavController().navigate(R.id.action_itemEditFragment_to_homeInventoryFragment)
-
+        viewLifecycleOwner.lifecycleScope.launch {
+            val totalValue = inventoryViewModel.getTotalInventoryValue()
+            val value = PriceFormatter.formatPrice(totalValue)
+            WidgetUpdate.saveValueForWidget(requireContext(),value)
+            Log.d("value value",value)
+            findNavController().navigate(R.id.action_itemEditFragment_to_homeInventoryFragment)
+        }
     }
 
 }

@@ -4,7 +4,7 @@ import android.content.Context
 
 object Constants {
 
-    const val NAME_BD: String = "app_data.db"
+    const val NAME_BD: String = "app_dataa.db"
     const val PREFS_NAME1 = "com.univalle.inventoryapp.widget.WidgetPrefs"
     const val PREF_KEY_WIDGET_VALUE1 = "app_value"
 }

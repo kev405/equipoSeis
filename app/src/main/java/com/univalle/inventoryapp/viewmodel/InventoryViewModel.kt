@@ -74,4 +74,16 @@ class InventoryViewModel(application: Application) : AndroidViewModel(applicatio
         return total
     }
 
+    fun getTotalInventoryValue() {
+        viewModelScope.launch {
+            _progressState.value = true
+            try {
+                val totalValue = inventoryRepository.getTotalInventoryValue()
+                _progressState.value = false
+            } catch (e: Exception) {
+                _progressState.value = false
+            }
+        }
+    }
+
 }

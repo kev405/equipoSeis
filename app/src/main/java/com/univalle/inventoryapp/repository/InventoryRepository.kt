@@ -34,4 +34,10 @@ class InventoryRepository (val context: Context){
         }
     }
 
+    suspend fun getTotalInventoryValue(): Double {
+        return withContext(Dispatchers.IO) {
+            inventoryDao.getTotalInventoryValue()
+        }
+    }
+
 }

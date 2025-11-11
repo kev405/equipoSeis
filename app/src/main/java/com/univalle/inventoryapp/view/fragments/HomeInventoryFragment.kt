@@ -40,6 +40,13 @@ class HomeInventoryFragment : Fragment() {
         controllerOverSystemBackButton()
         listenerButtonExit()
         listenerButtonAdd()
+        listenerTextoPrueba()
+    }
+
+    private fun listenerTextoPrueba() {
+        binding.textViewPrueba.setOnClickListener {
+            binding.textViewPrueba.text = inventoryViewModel.getTotalInventoryValue().toString()
+        }
     }
 
     private fun controllerOverSystemBackButton() {

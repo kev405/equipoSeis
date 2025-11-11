@@ -102,10 +102,6 @@ class WidgetProvider: AppWidgetProvider() {
         }
         else if (intent.action == ACTION_TOGGLE_TEXT) {
             val current = loadVisibility(context, appWidgetId)
-            val newState = !current
-            saveVisibility(context, appWidgetId, newState)
-
-//            val inventoryValue0=loadValue(context,appWidgetId)
             val inventoryValue0=loadValueLive(context,appWidgetId)
             if(current){
                 views.setTextViewText(R.id.widget_value, "$****")
@@ -115,6 +111,8 @@ class WidgetProvider: AppWidgetProvider() {
                 views.setTextViewText(R.id.widget_value, inventoryValue0)
                 views.setImageViewResource(R.id.eye_icon, R.drawable.ic_opened_eye)
             }
+            val newState = !current
+            saveVisibility(context, appWidgetId, newState)
         }
         else if (intent.action == ACTION_LOGIN) {
             val launchIntent = Intent(context, MainActivity::class.java)

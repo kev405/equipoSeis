@@ -13,9 +13,9 @@
         android:id="@+id/inventory_icon"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="25dp"
-        android:src="@drawable/ic_clipboard"
+        android:src="@drawable/ic_inventory_logo"
         android:contentDescription="Go to Details"
         android:clickable="true"
         android:focusable="true"/>
@@ -36,7 +36,7 @@
         android:id="@+id/widget_title1"
         android:layout_width="190dp"
         android:layout_height="30dp"
-        android:layout_marginLeft="3dp"
+        android:layout_marginStart="3dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="0dp"
         android:layout_toEndOf="@id/widget_title"
@@ -50,11 +50,11 @@
         />
     <ImageView
         android:id="@+id/eye_icon"
-        android:src="@drawable/ic_opened_eye"
+        android:src="@drawable/ic_closed_eye"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:layout_toEndOf="@id/widget_title1"
         android:contentDescription="Go to Details"
         android:clickable="true"
@@ -70,10 +70,9 @@
         android:layout_marginTop="15dp"
         android:gravity="center_vertical|end"
         android:textSize="18sp"
-        android:text="TEST"
+        android:text="$****"
         android:textColor="@color/widget_title2"
         />
-
     <TextView
         android:id="@+id/widget_title2"
         android:layout_width="180dp"
@@ -97,5 +96,4 @@
         android:clickable="true"
         android:focusable="true"
         />
-
 </RelativeLayout>

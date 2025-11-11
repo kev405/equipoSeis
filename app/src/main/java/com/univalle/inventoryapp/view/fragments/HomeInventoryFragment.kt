@@ -14,8 +14,10 @@ import com.univalle.inventoryapp.R
 import com.univalle.inventoryapp.databinding.FragmentHomeInventoryBinding
 import com.univalle.inventoryapp.view.adapters.InventoryAdapter
 import com.univalle.inventoryapp.viewmodel.InventoryViewModel
+import com.univalle.inventoryapp.utils.PriceFormatter
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+
 
 class HomeInventoryFragment : Fragment() {
     private lateinit var binding: FragmentHomeInventoryBinding
@@ -40,6 +42,17 @@ class HomeInventoryFragment : Fragment() {
         controllerOverSystemBackButton()
         listenerButtonExit()
         listenerButtonAdd()
+        listenerTextoPrueba()
+    }
+
+    private fun listenerTextoPrueba() {
+        binding.textViewPrueba.setOnClickListener {
+            viewLifecycleOwner.lifecycleScope.launch {
+                val total = PriceFormatter.formatPrice(inventoryViewModel.getTotalInventoryValue())
+                inventoryViewModel.getTotalInventoryValue().toString()
+                binding.textViewPrueba.text = "Total Inventory Value: $total"
+            }
+        }
     }
 
     private fun controllerOverSystemBackButton() {

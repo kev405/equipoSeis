@@ -24,4 +24,7 @@ interface InventoryDao {
     @Delete
     suspend fun delete(inventory: Inventory): Int
 
+    @Query("SELECT COALESCE(SUM(price * quantity), 0.0) FROM Inventory")
+    suspend fun getTotalInventoryValue(): Double
+
 }

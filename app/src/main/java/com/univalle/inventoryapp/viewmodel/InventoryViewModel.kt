@@ -8,6 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.univalle.inventoryapp.model.Inventory
 import com.univalle.inventoryapp.repository.InventoryRepository
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class InventoryViewModel(application: Application) : AndroidViewModel(application) {
     val context = getApplication<Application>()
@@ -72,6 +74,12 @@ class InventoryViewModel(application: Application) : AndroidViewModel(applicatio
     fun totalProducto(price: Double, quantity: Int): Double {
         val total = price * quantity
         return total
+    }
+
+    suspend fun getTotalInventoryValue(): Double {
+        return withContext(Dispatchers.IO) {
+            inventoryRepository.getTotalInventoryValue()
+        }
     }
 
 }

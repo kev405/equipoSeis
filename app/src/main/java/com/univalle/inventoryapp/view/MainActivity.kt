@@ -6,9 +6,10 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.univalle.inventoryapp.R
 import com.univalle.inventoryapp.utils.Prefs
-
 import com.univalle.inventoryapp.utils.WidgetUpdate
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

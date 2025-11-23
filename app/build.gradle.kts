@@ -4,6 +4,7 @@ plugins {
     id("com.google.devtools.ksp")
     id ("kotlin-kapt")
     id ("com.google.dagger.hilt.android")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -103,6 +104,13 @@ dependencies {
     //dagger hilt
     implementation("com.google.dagger:hilt-android:2.57.2")
     kapt("com.google.dagger:hilt-android-compiler:2.57.2")
+
+    // Firebase
+    implementation(platform("com.google.firebase:firebase-bom:34.6.0"))
+    implementation("com.google.firebase:firebase-firestore")
+
+    // Firebase Auth
+    // implementation("com.google.firebase:firebase-auth-ktx")
 }
 
 kotlin {

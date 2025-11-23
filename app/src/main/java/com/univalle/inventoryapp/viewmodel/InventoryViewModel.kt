@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class InventoryViewModel @Inject constructor(
-    private val InventoryRepository: InventoryRepository
+    private val inventoryRepository: InventoryRepository
 ) : ViewModel() {
 
     private val _listInventory = MutableLiveData<MutableList<Inventory>>()

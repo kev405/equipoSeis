@@ -9,8 +9,8 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class InventoryRepository @Inject constructor(
+    private val inventoryDao: InventoryDao
 ){
-    private var inventoryDao: InventoryDao = InventoryDB.getDatabase(context).inventoryDao()
 
     suspend fun getListInventory():MutableList<Inventory>{
         return withContext(Dispatchers.IO){

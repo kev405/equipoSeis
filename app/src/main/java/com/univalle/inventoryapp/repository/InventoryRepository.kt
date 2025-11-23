@@ -6,8 +6,10 @@ import com.univalle.inventoryapp.data.InventoryDao
 import com.univalle.inventoryapp.model.Inventory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class InventoryRepository (val context: Context){
+class InventoryRepository @Inject constructor(
+){
     private var inventoryDao: InventoryDao = InventoryDB.getDatabase(context).inventoryDao()
 
     suspend fun getListInventory():MutableList<Inventory>{

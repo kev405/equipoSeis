@@ -15,7 +15,9 @@ import com.univalle.inventoryapp.R
 import com.univalle.inventoryapp.databinding.FragmentItemEditBinding
 import com.univalle.inventoryapp.model.Inventory
 import com.univalle.inventoryapp.viewmodel.InventoryViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ItemEditFragment : Fragment() {
     private lateinit var binding: FragmentItemEditBinding
 

@@ -16,7 +16,9 @@ import android.graphics.Typeface
 import androidx.fragment.app.viewModels // Importar viewModels
 import com.univalle.inventoryapp.model.Inventory // Importar el modelo
 import com.univalle.inventoryapp.viewmodel.InventoryViewModel // Importar el ViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AddItemFragment : Fragment() {
 
     private lateinit var binding: FragmentAddItemBinding

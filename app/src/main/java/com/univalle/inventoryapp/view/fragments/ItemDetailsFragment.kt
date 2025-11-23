@@ -14,7 +14,9 @@ import com.univalle.inventoryapp.databinding.FragmentItemDetailsBinding
 import com.univalle.inventoryapp.model.Inventory
 import com.univalle.inventoryapp.viewmodel.InventoryViewModel
 import com.univalle.inventoryapp.utils.PriceFormatter
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ItemDetailsFragment : Fragment() {
     private lateinit var binding: FragmentItemDetailsBinding
     private val inventoryViewModel: InventoryViewModel by viewModels()

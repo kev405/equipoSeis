@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "873389313660",
+    "project_id": "inventoryapp-46eba",
+    "storage_bucket": "inventoryapp-46eba.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:873389313660:android:cbf6532b7937b75c0383f9",
+        "android_client_info": {
+          "package_name": "com.univalle.inventoryapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEGxXGlTIm5sSAmQUlcLm63ms2QlQ0B2E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -48,12 +48,31 @@ class AuthenticationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupBiometricAuth()
+        setupObservers()
 
         binding.lottieAnimationView.setOnClickListener {
             showBiometricPrompt()
         }
 
         controllerOverSystemBackButton()
+    }
+
+    private fun setupObservers() {
+        viewModel.passwordError.observe(viewLifecycleOwner) { errorMsg ->
+            binding.tilPassword.error = errorMsg
+        }
+
+        viewModel.loginResult.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is LoginViewModel.LoginResult.Success -> {
+                    Prefs.setLoggedIn(requireContext(), true)
+                    navigateToHome()
+                }
+                is LoginViewModel.LoginResult.Error -> {
+                    Toast.makeText(requireContext(), result.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
     private fun setupBiometricAuth() {
@@ -113,7 +132,6 @@ class AuthenticationFragment : Fragment() {
     private fun navigateToHome() {
         findNavController().navigate(R.id.action_authenticationFragment_to_homeInventoryFragment)
     }
-
 
     private fun controllerOverSystemBackButton() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {

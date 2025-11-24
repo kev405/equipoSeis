@@ -17,10 +17,8 @@ import com.univalle.inventoryapp.R
 import com.univalle.inventoryapp.databinding.FragmentAuthenticationBinding
 import com.univalle.inventoryapp.utils.Prefs
 import com.univalle.inventoryapp.viewmodel.LoginViewModel
-import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.Executor
 
-@AndroidEntryPoint
 class AuthenticationFragment : Fragment() {
 
     private lateinit var binding: FragmentAuthenticationBinding
@@ -52,9 +50,6 @@ class AuthenticationFragment : Fragment() {
         setupBiometricAuth()
         setupObservers()
 
-        binding.lottieAnimationView.setOnClickListener {
-            showBiometricPrompt()
-        }
 
         controllerOverSystemBackButton()
     }

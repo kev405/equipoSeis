@@ -1,5 +1,8 @@
 package com.univalle.inventoryapp.view.fragments
 
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
@@ -12,7 +15,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.univalle.inventoryapp.R
 import com.univalle.inventoryapp.databinding.FragmentHomeInventoryBinding
+import com.univalle.inventoryapp.utils.Prefs
 import com.univalle.inventoryapp.view.adapters.InventoryAdapter
+import com.univalle.inventoryapp.view.widget.WidgetProvider
 import com.univalle.inventoryapp.viewmodel.InventoryViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -26,7 +31,7 @@ class HomeInventoryFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentHomeInventoryBinding.inflate(inflater)
         binding.lifecycleOwner = this
         return binding.root
@@ -52,8 +57,26 @@ class HomeInventoryFragment : Fragment() {
 
     private fun listenerButtonExit() {
         binding.contentToolbar.iconExit.setOnClickListener {
+            Prefs.setLoggedIn(requireContext(), false)
+            forceWidgetUpdate()
             findNavController().navigate(R.id.action_homeInventoryFragment_to_authenticationFragment)
         }
+    }
+
+    private fun forceWidgetUpdate() {
+        val context = requireContext()
+        val appWidgetManager = AppWidgetManager.getInstance(context)
+
+        val ids = appWidgetManager.getAppWidgetIds(
+            ComponentName(context, WidgetProvider::class.java)
+        )
+
+        val updateIntent = Intent(context, WidgetProvider::class.java).apply {
+            action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+            putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
+        }
+
+        context.sendBroadcast(updateIntent)
     }
 
     private fun listenerButtonAdd() {

@@ -10,6 +10,7 @@ import com.univalle.inventoryapp.view.viewholder.InventoryViewHolder
 
 class InventoryAdapter (private val listInventory:MutableList<Inventory>, private val navController: NavController):
     RecyclerView.Adapter<InventoryViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InventoryViewHolder {
         val binding = ItemInventoryBinding.inflate(LayoutInflater.from(parent.context),parent, false)
         return InventoryViewHolder(binding, navController)

@@ -19,8 +19,10 @@ import com.univalle.inventoryapp.model.Inventory
 import com.univalle.inventoryapp.utils.PriceFormatter
 import com.univalle.inventoryapp.utils.WidgetUpdate
 import com.univalle.inventoryapp.viewmodel.InventoryViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class ItemEditFragment : Fragment() {
     private lateinit var binding: FragmentItemEditBinding
 

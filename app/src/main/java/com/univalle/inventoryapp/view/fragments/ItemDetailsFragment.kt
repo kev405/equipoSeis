@@ -18,7 +18,9 @@ import com.univalle.inventoryapp.viewmodel.InventoryViewModel
 import com.univalle.inventoryapp.utils.PriceFormatter
 import com.univalle.inventoryapp.utils.WidgetUpdate
 import kotlinx.coroutines.launch
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ItemDetailsFragment : Fragment() {
     private lateinit var binding: FragmentItemDetailsBinding
     private val inventoryViewModel: InventoryViewModel by viewModels()

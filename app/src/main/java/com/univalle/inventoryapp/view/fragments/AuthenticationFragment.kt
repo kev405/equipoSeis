@@ -1,5 +1,8 @@
 package com.univalle.inventoryapp.view.fragments
 
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +19,7 @@ import androidx.navigation.fragment.findNavController
 import com.univalle.inventoryapp.R
 import com.univalle.inventoryapp.databinding.FragmentAuthenticationBinding
 import com.univalle.inventoryapp.utils.Prefs
+import com.univalle.inventoryapp.view.widget.WidgetProvider
 import com.univalle.inventoryapp.viewmodel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.Executor
@@ -65,12 +69,39 @@ class AuthenticationFragment : Fragment() {
             when (result) {
                 is LoginViewModel.LoginResult.Success -> {
                     Prefs.setLoggedIn(requireContext(), true)
-                    navigateToHome()
+                    forceWidgetUpdate()
+                    handleSuccessfulNavigation()
                 }
                 is LoginViewModel.LoginResult.Error -> {
                     Toast.makeText(requireContext(), result.message, Toast.LENGTH_SHORT).show()
                 }
             }
+        }
+    }
+
+    private fun forceWidgetUpdate() {
+        val context = requireContext()
+        val appWidgetManager = AppWidgetManager.getInstance(context)
+
+        val ids = appWidgetManager.getAppWidgetIds(
+            ComponentName(context, WidgetProvider::class.java)
+        )
+
+        val updateIntent = Intent(context, WidgetProvider::class.java).apply {
+            action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+            putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
+        }
+
+        context.sendBroadcast(updateIntent)
+    }
+
+    private fun handleSuccessfulNavigation() {
+        val isFromWidget = arguments?.getBoolean("IS_FROM_WIDGET") ?: false
+
+        if (isFromWidget) {
+            requireActivity().finish()
+        } else {
+            navigateToHome()
         }
     }
 

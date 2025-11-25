@@ -40,12 +40,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun handleWidgetIntent(intent: Intent?, navController: NavController?) {
+
+        val isFromWidget = intent?.getBooleanExtra("IS_FROM_WIDGET", false) ?: false
+
         intent?.getStringExtra("DESTINATION_FRAGMENT")?.let { destination ->
             when (destination) {
                 "LOGIN" -> {
-                    if (navController?.currentDestination?.id != R.id.authenticationFragment) {
-                        navController?.navigate(R.id.authenticationFragment)
+                    val bundle = Bundle().apply {
+                        putBoolean("IS_FROM_WIDGET", isFromWidget)
                     }
+
+                    navController?.navigate(R.id.authenticationFragment, bundle)
                 }
                 "HOME" -> {
                     if (navController?.currentDestination?.id != R.id.homeInventoryFragment) {

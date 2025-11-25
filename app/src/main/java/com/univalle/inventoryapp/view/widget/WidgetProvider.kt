@@ -138,6 +138,7 @@ class WidgetProvider : AppWidgetProvider() {
         val intent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             putExtra("DESTINATION_FRAGMENT", "LOGIN")
+            putExtra("IS_FROM_WIDGET", true)
         }
         context.startActivity(intent)
     }

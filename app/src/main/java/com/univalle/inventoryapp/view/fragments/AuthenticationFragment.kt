@@ -11,7 +11,7 @@ import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.univalle.inventoryapp.R
 import com.univalle.inventoryapp.databinding.FragmentAuthenticationBinding
@@ -24,7 +24,8 @@ import java.util.concurrent.Executor
 class AuthenticationFragment : Fragment() {
 
     private lateinit var binding: FragmentAuthenticationBinding
-    private lateinit var viewModel: LoginViewModel
+    
+    private val viewModel: LoginViewModel by viewModels()
 
     private lateinit var executor: Executor
     private lateinit var biometricPrompt: BiometricPrompt
@@ -39,7 +40,6 @@ class AuthenticationFragment : Fragment() {
             inflater, R.layout.fragment_authentication, container, false
         )
 
-        viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
         binding.viewmodel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
@@ -50,12 +50,28 @@ class AuthenticationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupBiometricAuth()
+        setupObservers()
 
-        binding.lottieAnimationView.setOnClickListener {
-            showBiometricPrompt()
-        }
 
         controllerOverSystemBackButton()
+    }
+
+    private fun setupObservers() {
+        viewModel.passwordError.observe(viewLifecycleOwner) { errorMsg ->
+            binding.tilPassword.error = errorMsg
+        }
+
+        viewModel.loginResult.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is LoginViewModel.LoginResult.Success -> {
+                    Prefs.setLoggedIn(requireContext(), true)
+                    navigateToHome()
+                }
+                is LoginViewModel.LoginResult.Error -> {
+                    Toast.makeText(requireContext(), result.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
     private fun setupBiometricAuth() {
@@ -75,7 +91,6 @@ class AuthenticationFragment : Fragment() {
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
-
                     Prefs.setLoggedIn(requireContext(), true)
                     navigateToHome()
                 }
@@ -115,7 +130,6 @@ class AuthenticationFragment : Fragment() {
     private fun navigateToHome() {
         findNavController().navigate(R.id.action_authenticationFragment_to_homeInventoryFragment)
     }
-
 
     private fun controllerOverSystemBackButton() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {

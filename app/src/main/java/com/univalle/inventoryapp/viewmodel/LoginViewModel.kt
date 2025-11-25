@@ -4,11 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.firebase.auth.FirebaseAuth
+import com.univalle.inventoryapp.repository.LoginRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class LoginViewModel : ViewModel() {
-
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
+@HiltViewModel
+class LoginViewModel @Inject constructor(
+    private val repository: LoginRepository
+) : ViewModel() {
 
     val email = MutableLiveData<String>("")
     val password = MutableLiveData<String>("")
@@ -44,7 +47,7 @@ class LoginViewModel : ViewModel() {
         val emailInput = email.value!!
         val passInput = password.value!!
 
-        auth.signInWithEmailAndPassword(emailInput, passInput)
+        repository.login(emailInput, passInput)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     _loginResult.value = LoginResult.Success
@@ -58,7 +61,7 @@ class LoginViewModel : ViewModel() {
         val emailInput = email.value!!
         val passInput = password.value!!
 
-        auth.createUserWithEmailAndPassword(emailInput, passInput)
+        repository.register(emailInput, passInput)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     _loginResult.value = LoginResult.Success

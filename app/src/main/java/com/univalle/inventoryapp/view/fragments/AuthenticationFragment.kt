@@ -11,18 +11,21 @@ import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.univalle.inventoryapp.R
 import com.univalle.inventoryapp.databinding.FragmentAuthenticationBinding
 import com.univalle.inventoryapp.utils.Prefs
 import com.univalle.inventoryapp.viewmodel.LoginViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.Executor
 
+@AndroidEntryPoint
 class AuthenticationFragment : Fragment() {
 
     private lateinit var binding: FragmentAuthenticationBinding
-    private lateinit var viewModel: LoginViewModel
+    
+    private val viewModel: LoginViewModel by viewModels()
 
     private lateinit var executor: Executor
     private lateinit var biometricPrompt: BiometricPrompt
@@ -37,7 +40,6 @@ class AuthenticationFragment : Fragment() {
             inflater, R.layout.fragment_authentication, container, false
         )
 
-        viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
         binding.viewmodel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
@@ -89,7 +91,6 @@ class AuthenticationFragment : Fragment() {
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
-
                     Prefs.setLoggedIn(requireContext(), true)
                     navigateToHome()
                 }

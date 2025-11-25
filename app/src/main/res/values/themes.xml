@@ -1,27 +1,30 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <style name="Base.Theme.InventoryApp" parent="Theme.Material3.DayNight.NoActionBar">
-    </style>
+        </style>
+
+    <style name="Theme.InventoryApp" parent="Base.Theme.InventoryApp" />
 
     <style name="Theme.InventoryApp.Login" parent="Base.Theme.InventoryApp">
         <item name="android:windowBackground">@color/darkGreyBackground</item>
     </style>
 
-    <style name="Theme.InventoryApp" parent="Base.Theme.InventoryApp" />
+    <style name="WhiteBorderInput" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/text_input_box_stroke</item>
+        <item name="boxStrokeErrorColor">@color/errorRed</item>
+        
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeWidthFocused">2dp</item>
 
-    <style name="Widget.App.TextInputLayout.White" parent="Widget.Material3.TextInputLayout.OutlinedBox">
-        <item name="android:textColorHint">@android:color/white</item>
-        <item name="hintTextColor">@android:color/white</item>
-
-        <item name="boxStrokeColor">@color/text_input_layout_stroke_color_white</item>
-
-        <item name="boxStrokeWidth">2dp</item>
+        <item name="android:textColorHint">@color/white</item>
+        <item name="hintTextColor">@color/white</item>
+        
+        <item name="endIconTint">@color/white</item>
+        <item name="errorIconTint">@color/errorRed</item>
+        
+        <item name="android:editTextColor">@color/white</item>
     </style>
 
-    <style name="App.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
-        <item name="hintTextColor">@android:color/white</item>
+    <style name="Widget.App.TextInputLayout.White" parent="WhiteBorderInput" />
+    <style name="App.TextInputLayout" parent="WhiteBorderInput" />
 
-        <item name="android:textColorHint">@android:color/darker_gray</item>
-
-        <item name="boxStrokeColor">@color/text_input_layout_stroke_colors</item>
-    </style>
 </resources>

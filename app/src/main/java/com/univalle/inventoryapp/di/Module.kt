@@ -11,6 +11,7 @@ import com.univalle.inventoryapp.data.InventoryDB
 import com.univalle.inventoryapp.data.InventoryDao
 import com.univalle.inventoryapp.utils.Constants.NAME_BD
 import dagger.hilt.android.qualifiers.ApplicationContext
+import com.google.firebase.auth.FirebaseAuth
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -30,5 +31,11 @@ object Module {
     @Provides
     fun provideInventoryDao(inventoryDB: InventoryDB): InventoryDao {
         return inventoryDB.inventoryDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideFirebaseAuth(): FirebaseAuth {
+        return FirebaseAuth.getInstance()
     }
 }

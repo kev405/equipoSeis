@@ -42,7 +42,24 @@ class InventoryRepository @Inject constructor(
 
     suspend fun insertProduct(inventory: Inventory){
         return withContext(Dispatchers.IO){
-//            inventoryDao.insertProduct(inventory)
+            suspendCancellableCoroutine { cont ->
+                db.collection("inventory")
+                    .document(inventory.id.toString())
+                    .set(
+                        hashMapOf(
+                            "id" to inventory.id,
+                            "name" to inventory.name,
+                            "price" to inventory.price,
+                            "quantity" to inventory.quantity
+                        )
+                    )
+                    .addOnSuccessListener {
+                        cont.resumeWith(Result.success(Unit))
+                    }
+                    .addOnFailureListener { e ->
+                        cont.resumeWith(Result.failure(e))
+                    }
+            }
         }
     }
 

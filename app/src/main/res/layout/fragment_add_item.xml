@@ -28,7 +28,7 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <!-- Código producto: AHORA USA EL ESTILO PERSONALIZADO -->
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_codigo"
             style="@style/Widget.App.TextInputLayout.White"
@@ -75,7 +75,7 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Precio: AHORA USA EL ESTILO PERSONALIZADO -->
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_precio"
             style="@style/Widget.App.TextInputLayout.White"
@@ -99,7 +99,7 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Cantidad: AHORA USA EL ESTILO PERSONALIZADO -->
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_cantidad"
             style="@style/Widget.App.TextInputLayout.White"
@@ -128,7 +128,7 @@
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_marginHorizontal="16dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="4dp"
             android:enabled="false"
             android:text="Guardar"
             android:textSize="16sp"

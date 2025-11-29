@@ -92,7 +92,7 @@ class InventoryViewModelTest {
 
     @Test
     fun `deleteInventory should call repository delete`() = runTest {
-        val item = Inventory(1, "P", 10.0, 1)
+        val item = Inventory(1, "PeteThePony", 10.0, 1)
 
         viewModel.deleteInventory(item)
         testDispatcher.scheduler.advanceUntilIdle()
@@ -114,7 +114,7 @@ class InventoryViewModelTest {
 
     @Test
     fun `updateInventory should call repository update`() = runTest {
-        val item = Inventory(1, "P", 10.0, 1)
+        val item = Inventory(1, "ShawnTheShoe", 10.0, 5)
 
         viewModel.updateInventory(item)
         testDispatcher.scheduler.advanceUntilIdle()
@@ -124,7 +124,7 @@ class InventoryViewModelTest {
 
     @Test
     fun `updateInventory FAILS to call repository update`() = runTest {
-        val item = Inventory(1, "P", 10.0, 1)
+        val item = Inventory(1, "JaredTheJacket", 50.0, 10)
 
         `when`(repository.update(item)).thenThrow(RuntimeException("Test error from update function"))
 

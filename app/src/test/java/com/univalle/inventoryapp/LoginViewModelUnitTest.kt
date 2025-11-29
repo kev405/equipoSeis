@@ -138,7 +138,7 @@ class LoginViewModelUnitTest {
     }
 
     @Test
-    fun `onRegisterClicked with failed registration should post Error`() {
+    fun `onRegisterClicked with FAILED registration should post Error`() {
         val email = "test@example.com"
         val password = "123456"
         `when`(repository.register(email, password)).thenReturn(task)

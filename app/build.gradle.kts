@@ -54,11 +54,6 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    
-    // Testing de Develop
-    testImplementation("org.mockito:mockito-core:3.12.4")
-    testImplementation("org.mockito:mockito-inline:3.12.4")
-    testImplementation("org.mockito:mockito-android:3.11.2")
 
     // Toolbar
     implementation("androidx.coordinatorlayout:coordinatorlayout:1.2.0")
@@ -108,6 +103,16 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:34.6.0"))
     implementation("com.google.firebase:firebase-firestore")
     implementation(libs.firebase.auth)
+
+    //testing
+    testImplementation("junit:junit:4.13.2")
+    // Mockito (For mocking the Application and Repository)
+    testImplementation("org.mockito:mockito-core:5.10.0")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.2.1")
+    // AndroidX Core Testing (For InstantTaskExecutorRule, necessary for LiveData)
+    testImplementation("androidx.arch.core:core-testing:2.2.0")
+    // Kotlin Coroutines Test (For MainDispatcherRule and runTest utility)
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.0")
 }
 
 kotlin {

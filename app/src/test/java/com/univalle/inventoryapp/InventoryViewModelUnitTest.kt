@@ -58,6 +58,23 @@ class InventoryViewModelTest {
 
         Assert.assertEquals(sampleList, viewModel.listInventory.value)
     }
+    @Test
+    fun `getListInventory FAILS to listInventory LiveData`() = runTest {
+        val sampleList = mutableListOf(
+            Inventory(1, "Product A", 10.0, 5),
+            Inventory(2, "Product B", 15.0, 3)
+        )
+        `when`(repository.getListInventory()).thenThrow(RuntimeException("Test error from getListInventory() function"))
+
+        viewModel.getListInventory()
+
+        // Move coroutine forward
+        testDispatcher.scheduler.advanceUntilIdle()
+
+        Assert.assertNull(viewModel.listInventory.value)
+
+        verify(repository).getListInventory()
+    }
 
     @Test
     fun `insertProduct should call repository and refresh list`() = runTest {
@@ -84,8 +101,32 @@ class InventoryViewModelTest {
     }
 
     @Test
+    fun `deleteInventory FAILS to call repository delete`() = runTest {
+        val item = Inventory(1, "TonyTheToy", 10.0, 1)
+
+        `when`(repository.delete(item)).thenThrow(RuntimeException("Test error from delete function"))
+        viewModel.deleteInventory(item)
+
+        testDispatcher.scheduler.advanceUntilIdle()
+
+        verify(repository).delete(item)
+    }
+
+    @Test
     fun `updateInventory should call repository update`() = runTest {
         val item = Inventory(1, "P", 10.0, 1)
+
+        viewModel.updateInventory(item)
+        testDispatcher.scheduler.advanceUntilIdle()
+
+        verify(repository).update(item)
+    }
+
+    @Test
+    fun `updateInventory FAILS to call repository update`() = runTest {
+        val item = Inventory(1, "P", 10.0, 1)
+
+        `when`(repository.update(item)).thenThrow(RuntimeException("Test error from update function"))
 
         viewModel.updateInventory(item)
         testDispatcher.scheduler.advanceUntilIdle()

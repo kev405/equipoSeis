@@ -13,10 +13,17 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.graphics.Color
 import android.graphics.Typeface
+import android.util.Log
 import androidx.fragment.app.viewModels // Importar viewModels
+import androidx.lifecycle.lifecycleScope
 import com.univalle.inventoryapp.model.Inventory // Importar el modelo
+import com.univalle.inventoryapp.utils.PriceFormatter
+import com.univalle.inventoryapp.utils.WidgetUpdate
 import com.univalle.inventoryapp.viewmodel.InventoryViewModel // Importar el ViewModel
+import kotlinx.coroutines.launch
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AddItemFragment : Fragment() {
 
     private lateinit var binding: FragmentAddItemBinding
@@ -92,7 +99,14 @@ class AddItemFragment : Fragment() {
 
             inventoryViewModel.insertProduct(newProduct)
 
-            findNavController().popBackStack()
+            WidgetUpdate.saveValueForWidget(requireContext(),"fragment")
+            viewLifecycleOwner.lifecycleScope.launch {
+                val totalValue = inventoryViewModel.getTotalInventoryValue()
+                val value = PriceFormatter.formatPrice(totalValue)
+                WidgetUpdate.saveValueForWidget(requireContext(),value)
+                Log.d("value value",value)
+                findNavController().popBackStack()
+            }
         } else {
             // Se podría añadir un mensaje de error si la conversión falla (aunque los inputs son numéricos)
         }

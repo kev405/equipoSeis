@@ -7,143 +7,139 @@ import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
 import com.univalle.inventoryapp.R
-import com.univalle.inventoryapp.view.MainActivity
-
-import android.graphics.Color
-import com.univalle.inventoryapp.utils.Constants.PREF_KEY_WIDGET_VALUE1
+import com.univalle.inventoryapp.repository.InventoryRepository
 import com.univalle.inventoryapp.utils.Constants.PREFS_NAME1
+import com.univalle.inventoryapp.utils.Prefs
+import com.univalle.inventoryapp.utils.PriceFormatter
+import com.univalle.inventoryapp.view.MainActivity
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class WidgetProvider: AppWidgetProvider() {
+private const val ACTION_TOGGLE_VISIBILITY = "com.univalle.action.TOGGLE_VISIBILITY"
+private const val PREF_IS_VISIBLE_PREFIX = "is_visible_"
 
-    private var inventoryValue="no data loaded"
+@AndroidEntryPoint
+class WidgetProvider : AppWidgetProvider() {
 
-    companion object {
-        const val ACTION_TOGGLE_TEXT = "com.univalle.inventoryapp.widget.TOGGLE_TEXT"
-        const val EXTRA_WIDGET_ID = "com.univalle.inventoryapp.extra.WIDGET_ID"
-        const val PREFS_NAME ="com.univalle.inventoryapp.widget.WidgetPrefs"
-        const val PREF_PREFIX_KEY = "visible_value"
-        const val PREF_VALUE_KEY = "inventory_value"
-        const val ACTION_CHANGE_TEXT = "com.example.mywidget.CHANGE_TEXT"
-        const val ACTION_LOGIN = "com.univalle.inventoryapp.widget.LOGIN"
-    }
+    @Inject
+    lateinit var repository: InventoryRepository
 
-    override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
-        for (appWidgetId in appWidgetIds) {
-            /////////////from the actvity////////////////////////
-            val prefs = context.getSharedPreferences(PREFS_NAME1, Context.MODE_PRIVATE)
-            val appValue = prefs.getString(PREF_KEY_WIDGET_VALUE1, "No data yet") as String
-            saveValue(context,appWidgetId,appValue)
-            ////////////////////////////////////
-            ////////////////////////////////////
-            val views = RemoteViews(context.packageName, R.layout.widget)
-            // Create intent to trigger a broadcast when the widget is clicked
-            val intent = Intent(context, WidgetProvider::class.java).apply {
-                action = ACTION_CHANGE_TEXT
-                putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-            }
-
-            val pendingIntent = PendingIntent.getBroadcast(
-                context,
-                appWidgetId,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-            )
-            // Set click listener
-            views.setOnClickPendingIntent(R.id.widget_title, pendingIntent)
-
-
-            ///////////////////////////UNCOVERE
-            ///////////////////////////UNCOVERED
-            val intentToggle = Intent(context, WidgetProvider::class.java).apply {
-                action = ACTION_TOGGLE_TEXT
-                putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-            }
-
-            val pendingIntentToggle = PendingIntent.getBroadcast(
-                context,
-                appWidgetId,
-                intentToggle,
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-            )
-            views.setOnClickPendingIntent(R.id.eye_icon, pendingIntentToggle)
-
-            ///////////////////////////
-            ///////////////////////////GO TO APP
-//            val intentApp = Intent(context, MainActivity::class.java).apply {
-//                action = ACTION_LOGIN
-//                putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-//            }
-            val intentApp = Intent(context, MainActivity::class.java)
-
-            val pendingIntentApp = PendingIntent.getActivity(
-                context,
-                appWidgetId,
-                intentApp,
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-            )
-            views.setOnClickPendingIntent(R.id.settings_icon, pendingIntentApp)
-
-            /////////////////////////// Update widget of all
-            appWidgetManager.updateAppWidget(appWidgetId, views)
-        }
-    }
     override fun onReceive(context: Context, intent: Intent) {
+
+        if (intent.action == ACTION_TOGGLE_VISIBILITY) {
+
+            val widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
+
+            if (widgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
+                if (Prefs.isLoggedIn(context)) {
+                    toggleVisibility(context, widgetId)
+                } else {
+                    navigateToLogin(context)
+                }
+            }
+        }
+
         super.onReceive(context, intent)
+    }
+
+    private fun toggleVisibility(context: Context, widgetId: Int) {
+        val prefs = context.getSharedPreferences(PREFS_NAME1, Context.MODE_PRIVATE)
+        val isVisible = prefs.getBoolean(PREF_IS_VISIBLE_PREFIX + widgetId, false)
+        prefs.edit().putBoolean(PREF_IS_VISIBLE_PREFIX + widgetId, !isVisible).apply()
 
         val appWidgetManager = AppWidgetManager.getInstance(context)
-        val appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1)
+        updateWidgetComplete(context, appWidgetManager, widgetId)
+    }
 
-        val views = RemoteViews(context.packageName, R.layout.widget)
-        if (intent.action == ACTION_CHANGE_TEXT) {
-            // Random text or toggle between two values
-            val newText = listOf("inventario", "inventory", "Nice!").random()
-            views.setTextViewText(R.id.widget_title, newText)
-
+    override fun onUpdate(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetIds: IntArray
+    ) {
+        for (widgetId in appWidgetIds) {
+            updateWidgetComplete(context, appWidgetManager, widgetId)
         }
-        else if (intent.action == ACTION_TOGGLE_TEXT) {
-            val current = loadVisibility(context, appWidgetId)
-            val inventoryValue0=loadValueLive(context,appWidgetId)
-            if(current){
-                views.setTextViewText(R.id.widget_value, "$****")
-                views.setImageViewResource(R.id.eye_icon, R.drawable.ic_closed_eye)
+    }
+
+    private fun updateWidgetComplete(context: Context, appWidgetManager: AppWidgetManager, widgetId: Int) {
+        CoroutineScope(Dispatchers.Main).launch {
+
+            val totalValue = try {
+                repository.getTotalInventoryValue()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                0.0
             }
-            else{
-                views.setTextViewText(R.id.widget_value, inventoryValue0)
-                views.setImageViewResource(R.id.eye_icon, R.drawable.ic_opened_eye)
+
+            val formattedPrice = PriceFormatter.formatPrice(totalValue)
+
+            val views = RemoteViews(context.packageName, R.layout.widget)
+            val prefs = context.getSharedPreferences(PREFS_NAME1, Context.MODE_PRIVATE)
+
+            val isLoggedIn = Prefs.isLoggedIn(context)
+            val isVisible = isLoggedIn && prefs.getBoolean(PREF_IS_VISIBLE_PREFIX + widgetId, false)
+
+            showBalance(views, isVisible, formattedPrice)
+
+            views.setOnClickPendingIntent(R.id.widget_toggle_visibility, getPendingIntentToggle(context, widgetId))
+
+            val pendingIntentNavigation = getPendingIntentNavigate(context, isLoggedIn)
+            views.setOnClickPendingIntent(R.id.widget_logo, pendingIntentNavigation)
+            views.setOnClickPendingIntent(R.id.widget_manage_text, pendingIntentNavigation)
+            views.setOnClickPendingIntent(R.id.widget_settings_icon, pendingIntentNavigation)
+
+            appWidgetManager.updateAppWidget(widgetId, views)
+        }
+    }
+
+    private fun showBalance(views: RemoteViews, isVisible: Boolean, textoSaldo: String) {
+        if (isVisible) {
+            views.setTextViewText(R.id.widget_balance, textoSaldo)
+            views.setImageViewResource(R.id.widget_toggle_visibility, R.drawable.ic_closed_eye)
+        } else {
+            views.setTextViewText(R.id.widget_balance, "$ ****")
+            views.setImageViewResource(R.id.widget_toggle_visibility, R.drawable.ic_opened_eye)
+        }
+    }
+    private fun getPendingIntentToggle(context: Context, widgetId: Int): PendingIntent {
+        val intent = Intent(context, WidgetProvider::class.java).apply {
+            action = ACTION_TOGGLE_VISIBILITY
+            putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId)
+        }
+        return PendingIntent.getBroadcast(
+            context, widgetId, intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+    }
+
+    private fun getPendingIntentNavigate(context: Context, isLoggedIn: Boolean): PendingIntent {
+        val intent = Intent(context, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+
+            if (isLoggedIn) {
+                putExtra("DESTINATION_FRAGMENT", "HOME")
+            } else {
+                putExtra("DESTINATION_FRAGMENT", "LOGIN")
             }
-            val newState = !current
-            saveVisibility(context, appWidgetId, newState)
-        }
-        else if (intent.action == ACTION_LOGIN) {
-            val launchIntent = Intent(context, MainActivity::class.java)
-            launchIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            context.startActivity(launchIntent)
         }
 
-        appWidgetManager.updateAppWidget(appWidgetId, views)
-    }
-    fun saveVisibility(context: Context, appWidgetId: Int, visible: Boolean) {
-        val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        prefs.edit().putBoolean(PREF_PREFIX_KEY + appWidgetId, visible).apply()
+        val requestCode = if (isLoggedIn) 100 else 101
+
+        return PendingIntent.getActivity(
+            context, requestCode, intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
     }
 
-    private fun loadVisibility(context: Context, appWidgetId: Int): Boolean {
-        val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        return prefs.getBoolean(PREF_PREFIX_KEY + appWidgetId, false)
-    }
-    fun saveValue(context: Context, appWidgetId: Int, value: String) {
-        val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        prefs.edit().putString(PREF_VALUE_KEY + appWidgetId, value).apply()
-    }
-    private fun loadValue(context: Context, appWidgetId: Int): String? {
-//        val prefs = context.getSharedPreferences(PREFS_NAME1, Context.MODE_PRIVATE)
-//        val appValue = prefs.getString(PREF_KEY_WIDGET_VALUE1, "No data yet") as String
-        val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        return prefs.getString(PREF_VALUE_KEY + appWidgetId, "-65.00")
-    }
-    private fun loadValueLive(context: Context, appWidgetId: Int): String? {
-        val prefs = context.getSharedPreferences(PREFS_NAME1, Context.MODE_PRIVATE)
-        val appValue = prefs.getString(PREF_KEY_WIDGET_VALUE1, "No data yet") as String
-        return appValue
+    private fun navigateToLogin(context: Context) {
+        val intent = Intent(context, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            putExtra("DESTINATION_FRAGMENT", "LOGIN")
+            putExtra("IS_FROM_WIDGET", true)
+        }
+        context.startActivity(intent)
     }
 }

@@ -4,7 +4,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="backgroundColor">#CC000000</color>
     <color name="toolbarColor">#424242</color>
-    <color name="orangeInventory">#e7522e</color>
+    <color name="orangeInventory">#E7522E</color>
     <color name="backgroundColorItem">#e7e0eb</color>
     <color name="backgroundTint">#E7522A</color>
     <color name="widget_bg">#CC000000</color>
@@ -12,4 +12,8 @@
     <color name="widget_title2">#FFFFFF</color>
     <color name="widget_icon">#FA8523</color>
     <color name="darkGreyBackground">#FF424242</color>
+    
+    <color name="registerGrey">#9EA1A1</color>
+    <color name="errorRed">#FF0000</color>
+    <color name="transparent">#00000000</color>
 </resources>

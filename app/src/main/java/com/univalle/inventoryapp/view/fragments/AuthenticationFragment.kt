@@ -1,5 +1,8 @@
 package com.univalle.inventoryapp.view.fragments
 
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,18 +14,22 @@ import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.univalle.inventoryapp.R
 import com.univalle.inventoryapp.databinding.FragmentAuthenticationBinding
 import com.univalle.inventoryapp.utils.Prefs
+import com.univalle.inventoryapp.view.widget.WidgetProvider
 import com.univalle.inventoryapp.viewmodel.LoginViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.Executor
 
+@AndroidEntryPoint
 class AuthenticationFragment : Fragment() {
 
     private lateinit var binding: FragmentAuthenticationBinding
-    private lateinit var viewModel: LoginViewModel
+    
+    private val viewModel: LoginViewModel by viewModels()
 
     private lateinit var executor: Executor
     private lateinit var biometricPrompt: BiometricPrompt
@@ -37,7 +44,6 @@ class AuthenticationFragment : Fragment() {
             inflater, R.layout.fragment_authentication, container, false
         )
 
-        viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
         binding.viewmodel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
@@ -48,12 +54,55 @@ class AuthenticationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupBiometricAuth()
+        setupObservers()
 
-        binding.lottieAnimationView.setOnClickListener {
-            showBiometricPrompt()
-        }
 
         controllerOverSystemBackButton()
+    }
+
+    private fun setupObservers() {
+        viewModel.passwordError.observe(viewLifecycleOwner) { errorMsg ->
+            binding.tilPassword.error = errorMsg
+        }
+
+        viewModel.loginResult.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is LoginViewModel.LoginResult.Success -> {
+                    Prefs.setLoggedIn(requireContext(), true)
+                    forceWidgetUpdate()
+                    handleSuccessfulNavigation()
+                }
+                is LoginViewModel.LoginResult.Error -> {
+                    Toast.makeText(requireContext(), result.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun forceWidgetUpdate() {
+        val context = requireContext()
+        val appWidgetManager = AppWidgetManager.getInstance(context)
+
+        val ids = appWidgetManager.getAppWidgetIds(
+            ComponentName(context, WidgetProvider::class.java)
+        )
+
+        val updateIntent = Intent(context, WidgetProvider::class.java).apply {
+            action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+            putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
+        }
+
+        context.sendBroadcast(updateIntent)
+    }
+
+    private fun handleSuccessfulNavigation() {
+        val isFromWidget = arguments?.getBoolean("IS_FROM_WIDGET") ?: false
+
+        if (isFromWidget) {
+            requireActivity().finish()
+        } else {
+            navigateToHome()
+        }
     }
 
     private fun setupBiometricAuth() {
@@ -73,7 +122,6 @@ class AuthenticationFragment : Fragment() {
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
-
                     Prefs.setLoggedIn(requireContext(), true)
                     navigateToHome()
                 }
@@ -113,7 +161,6 @@ class AuthenticationFragment : Fragment() {
     private fun navigateToHome() {
         findNavController().navigate(R.id.action_authenticationFragment_to_homeInventoryFragment)
     }
-
 
     private fun controllerOverSystemBackButton() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
